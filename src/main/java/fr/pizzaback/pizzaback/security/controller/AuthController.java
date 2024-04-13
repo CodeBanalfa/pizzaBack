@@ -112,7 +112,7 @@ public final class AuthController {
 	 * @param username a username
 	 * @return the profile picture of the user
 	 * @throws SQLException
-	 */
+	 
 	@GetMapping(value = "/picture/{username}", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<InputStreamResource> getPicture(@PathVariable("username") final String username)
 			throws SQLException {
@@ -120,7 +120,7 @@ public final class AuthController {
 
 		return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG)
 				.body(new InputStreamResource(user.getPicture().getBinaryStream()));
-	}
+	}*/
 
 	/**
 	 *

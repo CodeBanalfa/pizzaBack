@@ -37,7 +37,7 @@ public class UserDto {
 		this.firstname = pUser.getFirstname();
 		this.lastname = pUser.getLastname();
 		this.role = pUser.getRoles().iterator().next().getName().name();
-		this.hasPicture = pUser.getPicture() != null;
+		/**this.hasPicture = pUser.getPicture() != null;*/
 
 	}
 
