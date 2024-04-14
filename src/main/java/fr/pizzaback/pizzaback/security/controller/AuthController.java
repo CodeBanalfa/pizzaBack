@@ -86,6 +86,7 @@ public final class AuthController {
 		return ResponseEntity.ok(new JwtResponse(tokenHeader + " " + jwt, tokenProvider.getExpiryDate(jwt),
 				new UserDto(user), refreshToken.getToken()));
 	}
+	
 
 	/**
 	 * Get a new token.

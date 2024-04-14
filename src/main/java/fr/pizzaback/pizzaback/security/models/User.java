@@ -20,8 +20,8 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 
 @Entity
-@Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
-		@UniqueConstraint(columnNames = "email") })
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username")})
+		/**@UniqueConstraint(columnNames = "email") })*/
 public class User {
 	/** technical id. */
 	@Id
@@ -31,12 +31,12 @@ public class User {
 
 	/** username aka login. */
 	@NonNull
+	@Column(name="phonenumber")
 	private String username = "...";
 
-	/** email. 
-	@NonNull
-	@Email
-	private String email = "xxx@yyy.com";*/
+	/** email. */
+	
+	
 
 	/** password. */
 	@NonNull
@@ -52,11 +52,11 @@ public class User {
 
 	/** profile picture. */
 
-	/**private Blob picture;*/
+
 
 	/** roles of the user. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
 	/**
@@ -72,19 +72,13 @@ public class User {
 	 * @param pEmail    the email
 	 * @param pPassword the password
 	 */
-	public User(final String pUsername, final String pEmail, final String pPassword) {
+	public User(final String pUsername, final String pPassword) {
 		this.username = pUsername;
-		/**this.email = pEmail;*/
+
 		this.password = pPassword;
 	}
 
-	/**
-	 * @return the email
 	
-	public String getEmail() {
-		return email;
-	} */
-
 	/**
 	 * @return the firstname
 	 */
@@ -114,11 +108,9 @@ public class User {
 	}
 
 	/**
-	 * @return the picture
+	 * @return the picture*/
 	 
-	public Blob getPicture() {
-		return picture;
-	}*/
+	
 
 	/**
 	 * @return the roles
@@ -135,12 +127,9 @@ public class User {
 	}
 
 	/**
-	 * @param pEmail the email to set
+	 * @param pEmail the email to set*/
 	 
-	public void setEmail(final String pEmail) {
-		this.email = pEmail;
-	}*/
-
+	
 	/**
 	 * @param pFirstname the firstname to set
 	 */

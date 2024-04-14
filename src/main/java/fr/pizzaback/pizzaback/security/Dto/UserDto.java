@@ -19,8 +19,7 @@ public class UserDto {
 	/** the role of te user. */
 	private String role;
 
-	/** Has the user a profile picture? */
-	private boolean hasPicture;
+
 
 	/** Default constructor. */
 	public UserDto() {
@@ -72,9 +71,7 @@ public class UserDto {
 	/**
 	 * @return the hasPicture
 	 */
-	public boolean isHasPicture() {
-		return hasPicture;
-	}
+	
 
 	/**
 	 * @param pFirstname the firstname to set
@@ -86,9 +83,7 @@ public class UserDto {
 	/**
 	 * @param pHasPicture the hasPicture to set
 	 */
-	public void setHasPicture(final boolean pHasPicture) {
-		this.hasPicture = pHasPicture;
-	}
+	
 
 	/**
 	 * @param pLastname the lastname to set
