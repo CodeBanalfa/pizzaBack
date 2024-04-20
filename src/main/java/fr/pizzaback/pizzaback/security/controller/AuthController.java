@@ -1,34 +1,45 @@
 package fr.pizzaback.pizzaback.security.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.management.ObjectName;
+import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import fr.pizzaback.pizzaback.security.Dto.JwtResponse;
 import fr.pizzaback.pizzaback.security.Dto.LoginRequest;
+import fr.pizzaback.pizzaback.security.Dto.SignupRequest;
 import fr.pizzaback.pizzaback.security.Dto.TokenRefreshRequest;
 import fr.pizzaback.pizzaback.security.Dto.TokenRefreshResponse;
 import fr.pizzaback.pizzaback.security.Dto.UserDto;
 import fr.pizzaback.pizzaback.security.jwt.JwtProvider;
 import fr.pizzaback.pizzaback.security.jwt.exception.TokenRefreshException;
 import fr.pizzaback.pizzaback.security.models.RefreshToken;
+import fr.pizzaback.pizzaback.security.models.RoleName;
 import fr.pizzaback.pizzaback.security.models.User;
 import fr.pizzaback.pizzaback.security.service.IRefreshTokenService;
 import fr.pizzaback.pizzaback.security.service.impl.UserDetailsServiceImpl;
+import io.jsonwebtoken.lang.Collections;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
@@ -43,11 +54,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/auth")
 public final class AuthController {
 
+	private static final List<ObjectName> User = null;
 	/** token header to use in JWT. */
 	@Value("${app.jwtTokenHeader}")
 	private String tokenHeader;
 
-	/** import authentication manager. */
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -86,7 +97,40 @@ public final class AuthController {
 		return ResponseEntity.ok(new JwtResponse(tokenHeader + " " + jwt, tokenProvider.getExpiryDate(jwt),
 				new UserDto(user), refreshToken.getToken()));
 	}
-	
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+		// Vérifiez si le nom d'utilisateur est déjà pris
+		if (userService.existsByUsername(signUpRequest.getUsername())) {
+			return ResponseEntity.badRequest().body("Error: Username is already taken!");
+		}
+
+		// Encodez le mot de passe avec BCrypt
+		String encodedPassword = new BCryptPasswordEncoder().encode(signUpRequest.getPassword());
+
+		// Créez un nouvel utilisateur avec les informations fournies
+		User user = new User();
+		user.setUsername(signUpRequest.getUsername());
+		user.setPassword(encodedPassword);
+		user.setFirstname(signUpRequest.getsetFirstname());
+		user.setLastname(signUpRequest.getLastname());
+		user.setAddress(signUpRequest.getAddress());
+
+		// Sauvegardez les détails de l'utilisateur
+		userService.save(user);
+
+  
+
+		// Générez le token JWT
+		String jwt = tokenProvider.generateToken(signUpRequest.getUsername());
+
+		// Créez le refresh token
+		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+
+		// Retournez la réponse avec le token JWT et le refresh token
+		return ResponseEntity
+				.ok(new JwtResponse(jwt, tokenProvider.getExpiryDate(jwt), new UserDto(user), refreshToken.getToken()));
+	}
+
 
 	/**
 	 * Get a new token.

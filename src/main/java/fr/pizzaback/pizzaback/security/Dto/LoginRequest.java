@@ -1,5 +1,7 @@
 package fr.pizzaback.pizzaback.security.Dto;
 
+
+
 public class LoginRequest {
 
 	/** the login received from the caller. */

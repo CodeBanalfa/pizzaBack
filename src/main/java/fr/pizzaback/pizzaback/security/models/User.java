@@ -21,7 +21,7 @@ import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username")})
-		/**@UniqueConstraint(columnNames = "email") })*/
+		
 public class User {
 	/** technical id. */
 	@Id
@@ -51,7 +51,10 @@ public class User {
 	private String lastname = "...";
 
 	/** profile picture. */
-
+    /** Adress **/
+	@NonNull
+	@Column(name="address")
+	private String adress = "...";
 
 
 	/** roles of the user. */
@@ -69,7 +72,6 @@ public class User {
 	 * Construct a new User.
 	 *
 	 * @param pUsername the username
-	 * @param pEmail    the email
 	 * @param pPassword the password
 	 */
 	public User(final String pUsername, final String pPassword) {
@@ -107,8 +109,7 @@ public class User {
 		return password;
 	}
 
-	/**
-	 * @return the picture*/
+	
 	 
 	
 
@@ -178,5 +179,22 @@ public class User {
 	public void setUsername(final String pUsername) {
 		this.username = pUsername;
 	}
+
+	/**
+	 * Définit l'adresse de l'utilisateur.
+	 *
+	 * @param address l'adresse à définir
+	 */
+	public void setAddress(final String address) {
+	    this.adress = address;
+	}
+
+	public void addRole(Set<Role> role) {
+		this.roles= role;
+		
+	}
+
+
+
 
 }

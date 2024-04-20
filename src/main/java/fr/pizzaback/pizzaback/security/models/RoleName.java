@@ -4,5 +4,5 @@ public enum RoleName {
 	/** role USER. */
 	USER,
 	/** role ADMIN. */
-	ADMIN
+	ADMIN,
 }

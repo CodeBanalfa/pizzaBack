@@ -60,4 +60,5 @@ public class Role {
 	public void setName(final RoleName pName) {
 		this.name = pName;
 	}
+	
 }

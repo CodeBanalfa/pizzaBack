@@ -82,6 +82,7 @@ public class JwtProvider {
 	public boolean validateToken(final String authToken) {
 		try {
 			Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(authToken);
+			
 			return true;
 		} catch (io.jsonwebtoken.security.SecurityException e) {
 			logger.error("Invalid JWT signature: {}", e.getMessage());

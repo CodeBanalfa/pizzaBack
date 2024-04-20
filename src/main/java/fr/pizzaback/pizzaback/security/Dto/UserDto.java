@@ -35,8 +35,12 @@ public class UserDto {
 		this.username = pUser.getUsername();
 		this.firstname = pUser.getFirstname();
 		this.lastname = pUser.getLastname();
-		this.role = pUser.getRoles().iterator().next().getName().name();
-		/**this.hasPicture = pUser.getPicture() != null;*/
+		 if (!pUser.getRoles().isEmpty()) {
+		        this.role = pUser.getRoles().iterator().next().getName().name();
+		    } else {
+		        this.role = "No Role"; // Ou tout autre valeur par dÃ©faut
+		    }
+
 
 	}
 
