@@ -20,7 +20,7 @@ public class PizzaMapp {
         return dtos;
     }
 
-    private static PizzaDTO pizzaToDto(Pizza pizza) {
+    public static PizzaDTO pizzaToDto(Pizza pizza) {
         PizzaDTO dto = new PizzaDTO();
 
         if (pizza != null) {
@@ -33,4 +33,9 @@ public class PizzaMapp {
 
         return dto;
     }
+
+	public static Pizza dtoToPizza(PizzaDTO pizzaDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -1,21 +1,14 @@
 package fr.pizzaback.pizzaback.core.domain;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "`order`")
 public class Order {
-
-  
-
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,8 +21,10 @@ public class Order {
     @Column(name = "total_amount", precision = 6, scale = 2)
     private BigDecimal totalAmount;
 
-    // Les getters et setters
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderLine> orderLines;
 
+    // Getters et Setters
     public Long getId() {
         return id;
     }
@@ -61,8 +56,23 @@ public class Order {
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
-    @Override
-  	public String toString() {
-  		return "Order [id=" + id + ", userId=" + userId + ", date=" + date + ", totalAmount=" + totalAmount + "]";
-  	}
-}
+
+    public Set<OrderLine> getOrderLines() {
+        return orderLines;
+    }
+
+    public void setOrderLines(Set<OrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
+
+    // Méthode pour ajouter des lignes de commande
+    public void addOrderLine(OrderLine orderLine) {
+        orderLines.add(orderLine);
+        orderLine.setOrder(this);
+    }
+    }
+
+
+
+
+

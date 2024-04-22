@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.pizzaback.pizzaback.core.dto.OrderDTO;
 import fr.pizzaback.pizzaback.core.service.IOrderService;
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 
 	private IOrderService orderService;
@@ -22,10 +23,10 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+  
     @PostMapping("/")
-    public ResponseEntity<OrderDTO> saveOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<OrderDTO> saveOrder(@Valid @RequestBody OrderDTO orderDTO) {
         OrderDTO savedOrder = orderService.save(orderDTO);
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
-  
 }

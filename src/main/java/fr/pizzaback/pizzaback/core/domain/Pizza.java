@@ -13,7 +13,9 @@ import jakarta.persistence.Table;
 @Table(name ="pizza")
 public class Pizza {
  
+	
 	@Id
+	@Column(name = "id")
     private Short id;
 
 	@Column(name = "name")
@@ -27,14 +29,14 @@ public class Pizza {
     
     @Column(name = "price")
     private BigDecimal price;
-
+public Pizza() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
     public Short getId() {
 		return id;
 	}
 
-	public void setId(Short id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -56,9 +58,6 @@ public class Pizza {
 		return image;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
-	}
 
 	public BigDecimal getPrice() {
 		return price;
@@ -72,8 +71,28 @@ public class Pizza {
 			return "Pizza [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image + ", price="
 					+ price + "]";
 		}
+	public void setImage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void setId(Short pizzaId) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+
+	
+
+
+
+
+}
+
+
+
 
 
     // Getters and setters
     // toString
-}
+
