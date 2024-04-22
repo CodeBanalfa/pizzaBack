@@ -2,7 +2,6 @@ package fr.pizzaback.pizzaback.core.domain;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -16,7 +15,7 @@ public class Order {
     private Long userId;
 
     @Column(name = "date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime date;
+    private String date;
 
     @Column(name = "total_amount", precision = 6, scale = 2)
     private BigDecimal totalAmount;
@@ -41,11 +40,11 @@ public class Order {
         this.userId = userId;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

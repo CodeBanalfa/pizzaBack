@@ -5,16 +5,23 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class OrderDTO {
-    private Long id;
+	private Long id;
     private Long userId;
-    private LocalDateTime date;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'.'HH:mm:ss")
+    private String date; 
+    
     private BigDecimal totalAmount;
     private Set<OrderLineDTO> orderLines;
+
+    // Constructor, getters, and setters
     public OrderDTO() {
-        this.date = LocalDateTime.now(); // Définit la date actuelle
+        this.date = LocalDateTime.now().toString(); // Default to current date
     }
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -31,11 +38,11 @@ public class OrderDTO {
         this.userId = userId;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -54,6 +61,7 @@ public class OrderDTO {
     public void setOrderLines(Set<OrderLineDTO> orderLines) {
         this.orderLines = orderLines;
     }
+
 	public void setDate(Date date2) {
 		// TODO Auto-generated method stub
 		

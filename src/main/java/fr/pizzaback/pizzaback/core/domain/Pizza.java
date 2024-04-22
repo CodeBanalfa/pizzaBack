@@ -72,11 +72,11 @@ public Pizza() {
 					+ price + "]";
 		}
 	public void setImage(String string) {
-		// TODO Auto-generated method stub
+		this.image=getImage();
 		
 	}
 	public void setId(Short pizzaId) {
-		// TODO Auto-generated method stub
+		this.id=id;
 		
 	}
 	
