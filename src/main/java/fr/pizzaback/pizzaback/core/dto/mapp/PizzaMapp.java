@@ -21,21 +21,30 @@ public class PizzaMapp {
     }
 
     public static PizzaDTO pizzaToDto(Pizza pizza) {
-        PizzaDTO dto = new PizzaDTO();
-
-        if (pizza != null) {
-            dto.setId(pizza.getId());
-            dto.setDescription(pizza.getDescription());
-            dto.setName(pizza.getName());
-            dto.setImage(pizza.getImage());
-            dto.setPrice(pizza.getPrice());
+        if (pizza == null) {
+            return null; // Vérification des nulls pour éviter des exceptions
         }
 
+        PizzaDTO dto = new PizzaDTO();
+        dto.setId(pizza.getId());
+        dto.setDescription(pizza.getDescription());
+        dto.setName(pizza.getName());
+        dto.setImage(pizza.getImage());
+        dto.setPrice(pizza.getPrice());
         return dto;
     }
 
-	public static Pizza dtoToPizza(PizzaDTO pizzaDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public static Pizza dtoToPizza(PizzaDTO pizzaDto) {
+        if (pizzaDto == null) {
+            return null; // Vérification des nulls
+        }
+
+        Pizza pizza = new Pizza(); // Correction: retournez un objet Pizza et non pas null
+        pizza.setId(pizzaDto.getId());
+        pizza.setName(pizzaDto.getName());
+        pizza.setDescription(pizzaDto.getDescription());
+        pizza.setImage(pizzaDto.getImage());
+        pizza.setPrice(pizzaDto.getPrice());
+        return pizza;
+    }
 }

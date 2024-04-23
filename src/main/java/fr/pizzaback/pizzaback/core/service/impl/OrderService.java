@@ -10,22 +10,21 @@ import fr.pizzaback.pizzaback.core.service.IOrderService;
 
 @Service
 public class OrderService implements IOrderService {
-
-  
-	private IOrderRepository orderRepo;
+    private final IOrderRepository orderRepo;
+    private final OrderMapp orderMapp;
 
     @Autowired
-    public OrderService(IOrderRepository orderRepo) {
+    public OrderService(IOrderRepository orderRepo, OrderMapp orderMapp) {
         this.orderRepo = orderRepo;
+        this.orderMapp = orderMapp;
     }
 
     @Override
     public OrderDTO save(OrderDTO orderDTO) {
-        Order order = OrderMapp.dtoToOrder(orderDTO);
+        Order order = orderMapp.dtoToOrder(orderDTO);
         order = orderRepo.save(order);
-        return OrderMapp.orderToDto(order);
+        return orderMapp.orderToDto(order);
     }
-
 }
 
 
